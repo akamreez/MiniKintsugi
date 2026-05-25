@@ -1,4 +1,6 @@
 package com.kintsugi.MiniKintsugi.exception;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,5 +28,20 @@ public class GlobalExceptionHandler {
 
         return errors;
     }
+
+    @ExceptionHandler(
+            UserAlreadyExistsException.class
+    )
+    public ResponseEntity<String>
+    handleUserAlreadyExistsException(
+            UserAlreadyExistsException ex
+    ) {
+
+        return new ResponseEntity<>(
+                ex.getMessage(),
+                HttpStatus.CONFLICT
+        );
+    }
+
 
 }

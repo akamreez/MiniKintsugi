@@ -1,5 +1,7 @@
 package com.kintsugi.MiniKintsugi.controller;
 
+import com.kintsugi.MiniKintsugi.dto.UserRequestDTO;
+import com.kintsugi.MiniKintsugi.dto.UserResponseDTO;
 import com.kintsugi.MiniKintsugi.service.UserService;
 import com.kintsugi.MiniKintsugi.user.User;
 
@@ -21,30 +23,44 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(
-            @RequestBody User user) {
+    public ResponseEntity<UserResponseDTO> registerUser(
+            @RequestBody UserRequestDTO dto) {
 
+        // the parameters of the methods are the clients request data always.
 
-        user.setPassword(
-                passwordEncoder.encode(user.getPassword())
+        User user = new User();
+
+        user.setUsername(dto.getUsername());
+
+        user.setPassword(dto.getPassword());
+
+        User savedUser =
+                userRepository.registerUser(user);
+
+        UserResponseDTO responseDTO =
+                new UserResponseDTO();
+
+        responseDTO.setId(savedUser.getId());
+
+        responseDTO.setUsername(
+                savedUser.getUsername()
         );
-        User savedUser = userRepository.registerUser(user);
 
-        return new ResponseEntity<>(
-                savedUser,
-                HttpStatus.CREATED
-        );
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(responseDTO);
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(
-            @RequestBody User user
+            @RequestBody UserRequestDTO dto
     ) {
+
 
         boolean isAuthenticated =
                 userRepository.loginUser(
-                        user.getUsername(),
-                        user.getPassword()
+                        dto.getUsername(),
+                        dto.getPassword()
                 );
 
         if(isAuthenticated) {

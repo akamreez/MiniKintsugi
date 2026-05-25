@@ -1,7 +1,8 @@
 package com.kintsugi.MiniKintsugi.service;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.kintsugi.MiniKintsugi.repository.TransactionRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 @Service
 public class TransactionService {
-    /* Temporary in memory storage , and later this will be replaced with database
-     */
+
     private final TransactionRepository transactionRepository;
     public TransactionService(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
+    private static final Logger logger =
+            LoggerFactory.getLogger(
+                    TransactionService.class
+            );
 
 
     public TransactionResponseDTO createTransaction( TransactionRequestDTO dto){
@@ -30,8 +34,21 @@ public class TransactionService {
 
         Transaction savedTransaction =
                 transactionRepository.save(transaction);
+
+        logger.info(
+                "Creating transaction for customer: {}",
+                transaction.getCustomerName()
+        );
+
+        logger.info(
+                "Transaction created with ID: {}",
+                savedTransaction.getId()
+        );
+
+
         TransactionResponseDTO responseDTO =
                 new TransactionResponseDTO();
+
 
         responseDTO.setId(savedTransaction.getId());
 
@@ -47,6 +64,10 @@ public class TransactionService {
         responseDTO.setStatus(
                 savedTransaction.getStatus());
 
+        logger.info(
+                "Transaction created with ID: {}",
+                savedTransaction.getId()
+        );
         return responseDTO;
 
     }

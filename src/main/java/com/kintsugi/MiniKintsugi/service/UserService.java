@@ -2,7 +2,7 @@ package com.kintsugi.MiniKintsugi.service;
 
 import com.kintsugi.MiniKintsugi.repository.UserRepository;
 import com.kintsugi.MiniKintsugi.user.User;
-
+import com.kintsugi.MiniKintsugi.exception.UserAlreadyExistsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +22,14 @@ public class UserService {
     }
 
     public User registerUser(User user) {
+
+        if(userRepository.existsByUsername(
+                user.getUsername()
+        )) {
+            throw new UserAlreadyExistsException(
+                    "Username already exists"
+            );
+        }
 
         return userRepository.save(user);
     }
@@ -44,4 +52,6 @@ public class UserService {
                 existingUser.getPassword()
         );
     }
+
+
 }
