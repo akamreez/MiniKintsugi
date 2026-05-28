@@ -2,7 +2,7 @@ package com.kintsugi.MiniKintsugi.service;
 
 // custom exception we created
 import com.kintsugi.MiniKintsugi.exception.UserAlreadyExistsException;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 // repository dependency
 import com.kintsugi.MiniKintsugi.repository.UserRepository;
 
@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.verify;
 
 // dependency used in UserService
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,7 +49,12 @@ public class UserServiceTest {
     // marks this method as a test
     @Test
     void shouldThrowExceptionWhenUsernameExists() {
+/*
 
+based on the expected behaviour of a logic , we give a method name ,
+and inside that method we assume the expected behaviour happens and write logic for it ,
+
+* */
         // create fake user object
         User user = new User();
 
@@ -71,4 +77,44 @@ public class UserServiceTest {
                 () -> userService.registerUser(user)
         );
     }
+
+    @Test
+    void shouldRegisterUserSuccessfully() {
+
+        User user = new User();
+
+        user.setUsername("newuser");
+
+        user.setPassword("123");
+
+        // simulate username does NOT exist
+        when(
+                userRepository.existsByUsername(
+                        "newuser"
+                )
+        ).thenReturn(false);
+
+        // simulate password hashing
+        when(
+                passwordEncoder.encode("123")
+        ).thenReturn("hashedPassword");
+
+        // simulate database save
+        when(
+                userRepository.save(user)
+        ).thenReturn(user);
+
+        User savedUser =
+                userService.registerUser(user);
+
+        assertEquals(
+                "newuser",
+                savedUser.getUsername()
+        );
+
+        verify(userRepository).save(user);
+    }
+
+
+
 }

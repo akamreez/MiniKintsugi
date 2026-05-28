@@ -30,7 +30,7 @@ public class TransactionSchedulerService {
                 transactionRepository;
     }
 
-    @Scheduled(fixedRate = 30000)
+   // @Scheduled(fixedRate = 30000)
     public void processPendingTransactions() {
 
         logger.info(
@@ -58,6 +58,13 @@ public class TransactionSchedulerService {
                         "Transaction {} marked COMPLETED",
                         transaction.getId()
                 );
+
+                logger.info(
+                        "EVENT: TransactionCompleted published for transaction {}",
+                        transaction.getId()
+                ); // event driven architecture means when a operation is completed in one service
+                // it notifies the other service , thats what  event driven architecture means ,
+                // they say event is emitted , means event is completed
             }
         }
     }

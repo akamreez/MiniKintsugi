@@ -18,7 +18,7 @@ public class TransactionRequestDTO {
     @NotBlank
     private String State;
 
-    @NotNull
+
     private TransactionStatus status;
 
     public TransactionRequestDTO() {

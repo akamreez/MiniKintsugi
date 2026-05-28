@@ -15,6 +15,16 @@ public class TransactionResponseDTO {
 
     }
 
+    public Integer getRiskScore() {
+        return riskScore;
+    }
+
+    public void setRiskScore(Integer riskScore) {
+        this.riskScore = riskScore;
+    }
+
+    private Integer riskScore;
+
     public Long getId() {
         return id;
     }

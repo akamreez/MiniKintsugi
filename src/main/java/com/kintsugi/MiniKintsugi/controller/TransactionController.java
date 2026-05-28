@@ -49,5 +49,24 @@ public class TransactionController {
 
         return transactionService.updateTransaction(id,updatedTransaction);
     }
+    @PutMapping("/approve/{id}")
+
+    public Transaction approveTransaction(
+            @PathVariable Long id
+    ) {
+
+        return transactionService
+                .approveTransaction(id);
+    }
+
+    @PutMapping("/reject/{id}")
+
+    public Transaction rejectTransaction(
+            @PathVariable Long id
+    ) {
+
+        return transactionService
+                .rejectTransaction(id);
+    }
 
 }

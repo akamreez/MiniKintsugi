@@ -1,13 +1,13 @@
 package com.kintsugi.MiniKintsugi.model;
 import java.math.BigDecimal;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 
 @Entity
 public class Transaction {
@@ -68,12 +68,23 @@ public class Transaction {
     @Positive
     private BigDecimal amount;
 
+    public Integer getRiskScore() {
+        return riskScore;
+    }
+
+    public void setRiskScore(Integer riskScore) {
+        this.riskScore = riskScore;
+    }
+
     @NotBlank
     private String state;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private TransactionStatus status;
 
+
+    private Integer riskScore;
     public Transaction(Long id, String customerName, BigDecimal amount, String state, TransactionStatus status) {
         this.id = id;
         this.customerName = customerName;

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MiniKintsugi</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>MiniKintsugi</h1>
+
+    <h2>Create Transaction</h2>
+
+    <input type="text"
+           id="customerName"
+           placeholder="Customer Name">
+
+    <input type="number"
+           id="amount"
+           placeholder="Amount">
+
+    <input type="text"
+           id="state"
+           placeholder="State">
+
+    <button onclick="createTransaction()">
+        Create Transaction
+    </button>
+
+    <h2>Transactions</h2>
+
+    <table>
+
+        <thead>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Customer</th>
+
+            <th>Amount</th>
+
+            <th>State</th>
+
+            <th>Risk</th>
+
+            <th>Status</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody id="transactionTable">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
