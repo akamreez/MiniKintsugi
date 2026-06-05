@@ -96,6 +96,16 @@ async function loadTransactions() {
                     ${transaction.status}
                 </td>
 
+                <td>
+    <button onclick="approveTransaction(${transaction.id})">
+        Approve
+    </button>
+
+    <button onclick="rejectTransaction(${transaction.id})">
+        Reject
+    </button>
+</td>
+
             </tr>
             `;
         }
@@ -103,3 +113,27 @@ async function loadTransactions() {
 }
 
 loadTransactions();
+
+async function approveTransaction(id) {
+
+    await fetch(
+        `/transactions/approve/${id}`,
+        {
+            method: "PUT"
+        }
+    );
+
+    loadTransactions();
+}
+
+async function rejectTransaction(id) {
+
+    await fetch(
+        `/transactions/reject/${id}`,
+        {
+            method: "PUT"
+        }
+    );
+
+    loadTransactions();
+}

@@ -49,8 +49,8 @@ public class TransactionController {
 
         return transactionService.updateTransaction(id,updatedTransaction);
     }
-    @PutMapping("/approve/{id}")
 
+    @PutMapping("/approve/{id}")
     public Transaction approveTransaction(
             @PathVariable Long id
     ) {
@@ -60,7 +60,6 @@ public class TransactionController {
     }
 
     @PutMapping("/reject/{id}")
-
     public Transaction rejectTransaction(
             @PathVariable Long id
     ) {
