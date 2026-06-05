@@ -104,6 +104,10 @@ async function loadTransactions() {
     <button onclick="rejectTransaction(${transaction.id})">
         Reject
     </button>
+
+    <button onclick="deleteTransaction(${transaction.id})">
+    Delete
+</button>
 </td>
 
             </tr>
@@ -132,6 +136,18 @@ async function rejectTransaction(id) {
         `/transactions/reject/${id}`,
         {
             method: "PUT"
+        }
+    );
+
+    loadTransactions();
+}
+
+async function deleteTransaction(id) {
+
+    await fetch(
+        `/transactions/${id}`,
+        {
+            method: "DELETE"
         }
     );
 
